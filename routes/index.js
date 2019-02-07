@@ -17,7 +17,7 @@ router.route('/contact')
   .post(function(req, res, next) {
     req.checkBody('name', 'Empty name').notEmpty();
     req.checkBody('email', 'Invalid email').isEmail();
-    req.checkBody('name', 'Empty message').notEmpty();
+    req.checkBody('message', 'Empty message').notEmpty();
     var errors = req.validationErrors();
 
     // if there are validation errors
