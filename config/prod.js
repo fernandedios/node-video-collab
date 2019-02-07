@@ -1,6 +1,7 @@
 'use strict'
 
 module.exports = {
+  email: process.env.USER_EMAIL,
   mailer: {
     service: process.env.MAILER_SERVICE,
     auth: {

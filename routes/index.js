@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+var nodemailer = require('nodemailer');
+var config = require('../config');
+var transporter = nodemailer.createTransport(config.mailer);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Node Video Collaboration' });
@@ -32,7 +36,21 @@ router.route('/contact')
     }
 
     else {
+      var message = 'From: ' + req.body.name + ' ' + req.body.email + ' <br>' + req.body.message;
+      var mailOptions = {
+        from: 'Node Video Collab <no-reply@nodevideocollab.com>',
+        to: config.email,
+        subject: 'You got a new message from visitor',
+        html: message
+      };
+
+      transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+          return console.log(error);
+        }
+
         res.render('thanks', { title: 'Thank you!' });
+      });
     }
   });
 
