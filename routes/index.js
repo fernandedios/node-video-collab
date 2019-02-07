@@ -15,7 +15,25 @@ router.route('/contact')
     res.render('contact', { title: 'Contact Us' });
   })
   .post(function(req, res, next) {
-    res.render('thanks', { title: 'Contact Us' });
+    req.checkBody('name', 'Empty name').notEmpty();
+    req.checkBody('email', 'Invalid email').isEmail();
+    req.checkBody('name', 'Empty message').notEmpty();
+    var errors = req.validationErrors();
+
+    // if there are validation errors
+    if (errors) {
+      res.render('contact', {
+        title: 'Contact Us',
+        name: req.body.name,
+        email: req.body.email,
+        message: req.body.message,
+        errorMessages: errors
+      });
+    }
+
+    else {
+        res.render('thanks', { title: 'Thank you!' });
+    }
   });
 
 
