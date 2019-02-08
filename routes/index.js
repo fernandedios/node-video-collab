@@ -52,8 +52,14 @@ router.route('/contact')
         res.render('thanks', { title: 'Thank you!' });
       });
     }
-  });
+});
 
+router.get('/login', function(req, res, next) {
+  res.render('login', { title: 'Login'});
+});
 
+router.get('/register', function(req, res, next) {
+  res.render('register', { title: 'Register a new account'});
+});
 
 module.exports = router;
