@@ -8,5 +8,6 @@ module.exports = {
       user: process.env.MAILER_USER,
       pass: process.env.MAILER_PASS
     }
-  }
+  },
+  dbConnstring: process.env.MONGO_URL
 };
