@@ -14,7 +14,7 @@ router.route('/register')
     req.checkBody('name', 'Empty Name').notEmpty();
     req.checkBody('email', 'Invalid Email').isEmail();
     req.checkBody('password', 'Empty Password').notEmpty();
-    req.checkBody('confirmPassword', 'Passwords do not match').equals(req.body.password).notEmpty();
+    req.checkBody('password', 'Passwords do not match').equals(req.body.confirmPassword).notEmpty();
 
     var errors = req.validationErrors();
 
@@ -28,7 +28,7 @@ router.route('/register')
     else {
       var user = new User();
       user.name = req.body.name;
-      user.email = req.body,email;
+      user.email = req.body.email;
       user.setPassword(req.body.password);
       user.save(function(err) {
         if (err) {
@@ -40,3 +40,6 @@ router.route('/register')
       });
     }
   });
+
+
+module.exports = router;
