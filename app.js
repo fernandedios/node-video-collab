@@ -6,9 +6,12 @@ var logger = require('morgan');
 var expressValidator = require('express-validator');
 
 var mongoose = require('mongoose');
+var passport = require('passport');
+var session = require('express-session');
 var config = require('./config');
 
 var indexRouter = require('./routes/index');
+var authRouter = require('./routes/auth');
 
 mongoose.connect(config.dbConnstring);
 global.User = require('./models/user');
@@ -23,9 +26,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: config.sessionKey,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressValidator());
 app.use('/', indexRouter);
+app.use('/', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
