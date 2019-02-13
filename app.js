@@ -13,6 +13,8 @@ var config = require('./config');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 
+require('./passport');
+
 mongoose.connect(config.dbConnstring);
 global.User = require('./models/user');
 
@@ -29,8 +31,7 @@ app.use(cookieParser());
 app.use(session({
   secret: config.sessionKey,
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());

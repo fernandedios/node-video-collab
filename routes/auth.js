@@ -9,7 +9,7 @@ router.route('/login')
   .post(passport.authenticate('local', {
     failureRedirect: '/login'
   }), function(req, res) {
-    res.send('/');
+    res.redirect('/');
   });
 
 router.route('/register')
