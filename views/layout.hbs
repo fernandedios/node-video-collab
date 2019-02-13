@@ -29,8 +29,11 @@
 
           <ul class="navbar-nav ml-auto">
             {{#if user}}
-            <li class="nav-item">
-              <a class="nav-link" href="#">{{user.name}}</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">{{user.name}}</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/logout">Log Out</a>
+              </div>
             </li>
 
             {{else}}
