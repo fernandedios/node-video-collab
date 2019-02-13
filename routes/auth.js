@@ -49,7 +49,7 @@ router.route('/register')
 
 router.get('/logout', function(req, res, next) {
   req.logout();
-  req.redirect('/');
+  res.redirect('/');
 });
 
 module.exports = router;
