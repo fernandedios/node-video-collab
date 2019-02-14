@@ -1,6 +1,7 @@
 'use strict'
 
 module.exports = {
+  base: process.env.BASE_URL,
   email: process.env.USER_EMAIL,
   mailer: {
     service: process.env.MAILER_SERVICE,
@@ -10,5 +11,9 @@ module.exports = {
     }
   },
   dbConnstring: process.env.MONGO_URL,
-  sessionKey: process.env.SESSION_KEY
+  sessionKey: process.env.SESSION_KEY,
+  facebook: {
+    clientID: process.env.FB_CLIENTID,
+    clientSecret: process.env.FB_CLIENTSECRET
+  }
 };
