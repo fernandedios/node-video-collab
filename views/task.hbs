@@ -4,14 +4,38 @@
   </div>
 
   <div class="col-md-4" id="chatbox">
+    <div class="card">
+      <div class="card-header">
+        CHAT ROOM
+        <span class="pull-right" id="chatbox-username">
+          {{#if user}}
+            {{user.name}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled" id="chatbox-listMessages">
+        </ul>
+      </div>
+      <div class="card-footer">
+        <div class="input-group">
+          <input placeholder="Enter Message" id="userMessage" type="text" class="form-control form-control-sm">
+          <div class="input-group-append">
+            <button class="btn btn-primary" onclick="sendMessage()">SEND</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"></script>
 <script>
+
   var editor = CodeMirror.fromTextArea(document.getElementById("code-screen"), {
     lineNumbers: true,
     theme: "monokai"
   });
+
 </script>
