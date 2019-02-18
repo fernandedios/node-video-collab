@@ -4,7 +4,7 @@ var router = express.Router();
 router.get('/createTask', function(req, res, next) {
   var newTask = new Task();
 
-  newTask = save(function(err, data) {
+  newTask.save(function(err, data) {
     if (err) {
       console.log(err);
       res.render('error');
