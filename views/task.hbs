@@ -61,7 +61,7 @@
   }
 
   socket.on('chatMessage', function(data) {
-    $('#chatbox.listMessages').append(userMessage(data.username, data.message));
+    $('#chatbox-listMessages').append(userMessage(data.username, data.message));
   });
 
 </script>
