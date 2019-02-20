@@ -7,7 +7,7 @@
     <div class="card">
       <div class="card-header">
         CHAT ROOM
-        <span class="pull-right" id="chatbox-username">
+        <span class="float-right" id="chatbox-username">
           {{#if user}}
             {{user.name}}
           {{/if}}
@@ -31,6 +31,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+
 <script>
   var socket = io.connect('http://localhost:3000');
   var editor = CodeMirror.fromTextArea(document.getElementById("code-screen"), {
@@ -60,5 +63,5 @@
   socket.on('chatMessage', function(data) {
     $('#chatbox.listMessages').append(userMessage(data.username, data.message));
   });
-  
+
 </script>
