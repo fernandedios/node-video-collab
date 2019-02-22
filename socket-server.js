@@ -17,7 +17,7 @@ module.exports = function(server) {
           Task.findByIdAndUpdate(data.room, { content: self.document }, function(err) {
             if (err) return false;
             cb(true);
-          })
+          });
         });
 
         roomList[data.room] = socketIOServer;
