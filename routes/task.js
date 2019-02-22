@@ -24,7 +24,7 @@ router.get('/task/:id', function(req, res, next) {
       }
 
       if (data) {
-        res.render('task', { content: data.content, roonId: data.id });
+        res.render('task', { content: data.content, roomId: data.id });
       }
       else {
         res.render('error');
