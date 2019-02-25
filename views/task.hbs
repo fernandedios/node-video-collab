@@ -56,7 +56,7 @@
 
 <script src="/plugins/ot/ot.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.20/peer.js"></script>
 
 <script>
   var EditorClient = ot.EditorClient;
@@ -115,7 +115,7 @@
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
   // PeerJS object
-  var peer = new Peer(username + roomId, { host: 'localhost', port: 3000, path: '/peer' });
+  var peer = new Peer(username + roomId, { host: 'localhost', port: 9000, path: '/', debug: 3 });
 
   peer.on('open', function(){
     $('#my-id').text(peer.id);
@@ -147,11 +147,13 @@
     });
     step1();
   });
+  
   function step1 () {
     // Get audio/video stream
     navigator.getUserMedia({audio: true, video: true}, function(stream){
       // Set your video displays
-      $('#my-video').prop('src', URL.createObjectURL(stream));
+      $('#my-video')[0].srcObject = URL.createObjectURL(stream);
+
       window.localStream = stream;
       step2();
     }, function(){ $('#step1-error').show(); });
