@@ -123,18 +123,22 @@
 
   // Receiving a call
   peer.on('call', function(call) {
-    navigator.mediaDevices.getUserMedia({ video: true }, function(localStream) {
-      $('#my-video')[0].srcObject = localStream;
-      call.answer(localStream)
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(localStream) {
+        $('#my-video')[0].srcObject = localStream;
+        call.answer(localStream)
 
-      call.on('stream', function(remoteStream) {
-        $('#second-video')[0].srcObject = remoteStream;
+        call.on('stream', function(remoteStream) {
+          $('#second-video')[0].srcObject = remoteStream;
+        });
+
+        call.on('close', step2);
+        window.existingCall = call;
+        step2();
+      })
+      .catch(function(err) {
+        console.log(err);
       });
-
-      call.on('close', step2);
-      $('#step2').hide();
-      $('#step3').show();
-    })
   });
 
   peer.on('error', function(err){
@@ -152,28 +156,36 @@
       });
 
       call.on('close', step2);
-      $('#step2').hide();
-      $('#step3').show();
+      window.existingCall = call;
+      step2();
     });
 
     $('#end-call').click(function(){
       window.existingCall.close();
       step2();
     });
+
     step1();
   });
 
-  function step1 () {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true }, function(localStream){
-      $('#my-video')[0].srcObject = localStream;
-      window.localStream = localStream;
-      step2();
-    });
+  function step1() {
+    console.log('step1');
+
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+      .then(function(localStream){
+        $('#my-video')[0].srcObject = localStream;
+        window.localStream = localStream;
+        step2();
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   }
 
   function step2 () {
     $('#step3').hide();
     $('#step2').show();
+    console.log('step2');
   }
 
 </script>
