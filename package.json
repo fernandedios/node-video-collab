@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "start": "concurrently \"node ./bin/www\" \"npx peerjs --port 9000\"",
+    "dev": "concurrently \"nodemon ./bin/www\" \"npx peerjs --port 9000\"",
   },
   "dependencies": {
+    "concurrently": "^4.1.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
