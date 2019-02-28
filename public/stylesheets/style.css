@@ -45,3 +45,11 @@ a {
 #my-id {
   font-weight: bold;
 }
+
+#make-call, #end-call {
+  width: 80px;
+}
+
+#make-call i, #end-call i {
+  font-size: 20px;
+}
