@@ -49,8 +49,6 @@
   </div>
 </div>
 
-<input type="hidden" value="{{roomId}}" id="roomId" />
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"></script>
 
@@ -63,7 +61,11 @@
   var SocketIOAdapter = ot.SocketIOAdapter;
   var CodeMirrorAdapter = ot.CodeMirrorAdapter;
 
-  var socket = io.connect('http://localhost:3000');
+  var roomId = {{{json roomId}}};
+  var peerServerConf = {{{json peerServer}}};
+  var baseURL = {{{json base}}};
+
+  var socket = io.connect(baseURL);
   var editor = CodeMirror.fromTextArea(document.getElementById("code-screen"), {
     lineNumbers: true,
     theme: "monokai"
@@ -71,6 +73,7 @@
 
   var code = $('#code-screen').val();
   var cmClient;
+
   function init(str, revision, clients, serverAdapter) {
     if (!code) {
       editor.setValue(str);
@@ -92,7 +95,6 @@
     $("#chatbox-username").text(username);
   };
 
-  var roomId = $('#roomId').val();
   socket.emit('joinRoom', {room: roomId, username: username});
 
   var userMessage = function(name, text) {
@@ -115,7 +117,7 @@
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
   // PeerJS object
-  var peer = new Peer(username + roomId, { host: 'localhost', port: 9000, path: '/', debug: 3 });
+  var peer = new Peer(username + roomId, { host: peerServerConf.host, port: peerServerConf.port, path: '/', debug: 3 });
 
   peer.on('open', function(){
     $('#my-id').text(peer.id);
