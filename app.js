@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var expressValidator = require('express-validator');
+var exphbs  = require('express-handlebars');
 
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -23,8 +24,14 @@ global.Task = require('./models/task');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.engine('.hbs', exphbs({
+  layoutsDir: "views/",
+  defaultLayout: 'layout',
+  extname: '.hbs',
+  helpers: require('./helpers/handlebar-helpers')
+}));
+
+app.set('view engine', '.hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
