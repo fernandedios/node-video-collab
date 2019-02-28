@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var config = require('../config');
 
 router.get('/createTask', function(req, res, next) {
   var newTask = new Task();
@@ -24,7 +25,12 @@ router.get('/task/:id', function(req, res, next) {
       }
 
       if (data) {
-        res.render('task', { content: data.content, roomId: data.id });
+        res.render('task', {
+          content: data.content,
+          roomId: data.id,
+          base: config.base,
+          peerServer:  config.peerServer
+        });
       }
       else {
         res.render('error');
