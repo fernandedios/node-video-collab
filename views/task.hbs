@@ -113,7 +113,7 @@
 
   var sendMessage = function() {
   var userMessage = $('#userMessage').val();
-  socket.emit('chatMessage', {message: userMessage, username: username});
+  socket.emit('chatMessage', { message: userMessage, username: username });
     $('#userMessage').val("");
   };
 
@@ -179,8 +179,6 @@
   });
 
   function step1() {
-    console.log('step1');
-
     navigator.mediaDevices.getUserMedia({ audio: true, video: true })
       .then(function(localStream){
         $('#my-video')[0].srcObject = localStream;
@@ -195,7 +193,6 @@
   function step2 () {
     $('#step3').hide();
     $('#step2').show();
-    console.log('step2');
   }
 
 </script>
