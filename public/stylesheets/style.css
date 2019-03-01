@@ -1,6 +1,21 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    flex-shrink: 0;
+}
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#page-content {
+  margin-top: 50px;
+  flex-grow: 1;
 }
 
 a {
@@ -52,4 +67,10 @@ a {
 
 #make-call i, #end-call i {
   font-size: 20px;
+}
+
+footer {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(0,0,0,.03);
 }
