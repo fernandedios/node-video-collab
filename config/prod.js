@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  base: process.env.BASE_URL + ':' + process.env.PORT,
+  base: process.env.BASE_URL,
   email: process.env.USER_EMAIL,
   peerServer: {
     host: process.env.PEER_HOST,
