@@ -126,10 +126,10 @@
 
   // PeerJS object
   var peer = new Peer(username + roomId, {
-    key: 'lwjd5qra8257b9',
     host: peerServerConf.host,
     port: peerServerConf.port,
-    path: '/', debug: 3
+    path: '/',
+    debug: 3
   });
 
   peer.on('open', function(){
