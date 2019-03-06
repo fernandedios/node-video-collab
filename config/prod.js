@@ -18,6 +18,7 @@ module.exports = {
   sessionKey: process.env.SESSION_KEY,
   facebook: {
     clientID: process.env.FB_CLIENTID,
-    clientSecret: process.env.FB_CLIENTSECRET
+    clientSecret: process.env.FB_CLIENTSECRET,
+    callback: process.env.FB_CALLBACK
   }
 };
