@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "concurrently \"nodemon ./bin/www\" \"npx peerjs --port 9000\""
+    "dev": "concurrently \"nodemon ./bin/www\" \"npx peerjs --port 9001\""
   },
   "dependencies": {
     "concurrently": "^4.1.0",
