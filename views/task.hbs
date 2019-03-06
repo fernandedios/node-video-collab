@@ -125,7 +125,12 @@
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
   // PeerJS object
-  var peer = new Peer(username + roomId, { host: peerServerConf.host, port: peerServerConf.port, path: '/', debug: 3 });
+  var peer = new Peer(username + roomId, {
+    key: 'lwjd5qra8257b9',
+    host: peerServerConf.host,
+    port: peerServerConf.port,
+    path: '/', debug: 3
+  });
 
   peer.on('open', function(){
     $('#my-id').text(peer.id);
