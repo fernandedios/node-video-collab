@@ -6,6 +6,7 @@ module.exports = {
   peerServer: {
     host: process.env.PEER_HOST,
     port: process.env.PEER_PORT,
+    secure: process.env.PEER_SECURE,
   },
   mailer: {
     service: process.env.MAILER_SERVICE,
