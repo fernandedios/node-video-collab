@@ -2,18 +2,34 @@ var express = require('express');
 var router = express.Router();
 var config = require('../config');
 
-router.get('/createTask', function(req, res, next) {
-  var newTask = new Task();
+router.post('/createTask', function(req, res, next) {
+  req.checkBody('title', 'Empty task name').notEmpty();
+  var errors = req.validationErrors();
 
-  newTask.save(function(err, data) {
-    if (err) {
-      console.log(err);
-      res.render('error');
-    }
-    else {
-      res.redirect('/task/' + data._id);
-    }
-  });
+  if (errors) {
+      res.render('index', {
+        title: 'Node Video Collaboration',
+        taskTitle: req.body.title,
+        errorMessages: errors
+      });
+  }
+  else {
+
+    var newTask = new Task({
+      title: req.body.title,
+      owner: req.user._id
+    });
+
+    newTask.save(function(err, data) {
+      if (err) {
+        console.log(err);
+        res.render('error');
+      }
+      else {
+        res.redirect('/task/' + data._id);
+      }
+    });
+  }
 });
 
 router.get('/task/:id', function(req, res, next) {
