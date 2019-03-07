@@ -42,7 +42,7 @@ router.get('/task/:id', function(req, res, next) {
 
       if (data) {
         res.render('task', {
-          content: data.content,
+          data: data,
           roomId: data.id,
           base: config.base,
           peerServer:  config.peerServer

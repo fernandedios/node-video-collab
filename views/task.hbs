@@ -1,8 +1,10 @@
 <div class="row">
-  <div class="col-lg-8">
-    <textarea id="code-screen">{{content}}</textarea>
+  <div class="col">
+    <h5>{{data.title}}</h5>
   </div>
+</div>
 
+<div class="row">
   <div class="col-lg-4" id="chatbox">
     <div class="card">
 
@@ -32,7 +34,19 @@
           </p>
         </div>
       </div>
+    </div>
+  </div>
 
+
+  <div class="col-lg-8">
+    <textarea id="code-screen">{{data.content}}</textarea>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4"></div>
+  <div class="col-lg-8">
+    <div class="card">
       <div class="card-header">
         CHAT ROOM
         <span class="float-right" id="chatbox-username">
@@ -57,6 +71,8 @@
   </div>
 </div>
 
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"></script>
 
@@ -68,6 +84,7 @@
   var EditorClient = ot.EditorClient;
   var SocketIOAdapter = ot.SocketIOAdapter;
   var CodeMirrorAdapter = ot.CodeMirrorAdapter;
+  var taskData = {{{json data}}};
 
   var roomId = {{{json roomId}}};
   var peerServerConf = {{{json peerServer}}};
