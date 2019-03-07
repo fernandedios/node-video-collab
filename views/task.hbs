@@ -43,21 +43,29 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-lg-4"></div>
-  <div class="col-lg-8">
+<div class="row mt-3">
+  <div class="col">
     <div class="card">
-      <div class="card-header">
-        CHAT ROOM
+      <div class="card-header">CHAT ROOM
         <span class="float-right" id="chatbox-username">
           {{#if user}}
             {{user.name}}
           {{/if}}
         </span>
       </div>
+
       <div class="card-body">
-        <ul class="list-unstyled" id="chatbox-listMessages">
-        </ul>
+        <div class="row">
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <ul id="users-list" class="list-group"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <ul class="list-unstyled" id="chatbox-listMessages"></ul>
+        </div>
       </div>
       <div class="card-footer">
         <div class="input-group">
@@ -70,7 +78,6 @@
     </div>
   </div>
 </div>
-
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>

@@ -23,12 +23,16 @@ a {
 }
 
 #chatbox-listMessages {
-  height: 300px;
+  height: 150px;
   overflow-y: scroll;
 }
 
+#users-list {
+  height: 100px;
+}
+
 .CodeMirror {
-  height: 600px;
+  height: 530px;
 }
 
 *, *::before, *::after {
