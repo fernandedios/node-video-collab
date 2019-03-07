@@ -2,5 +2,19 @@
 <p>Welcome to {{title}}</p>
 
 {{#if user}}
-  <a href="/createTask" class="btn btn-primary">Create New Task</a>
+  <div class="row">
+    <div class="col-md-6">
+      {{#each errorMessages}}
+        <div class="alert alert-danger">
+          {{this.msg}}
+        </div>
+      {{/each}}
+      <form action="/createTask" class="form-inline" method="post">
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="text" class="form-control" name="title" placeholder="Task Title">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Create New Task</button>
+      </form>
+    </div>
+  </div>
 {{/if}}
