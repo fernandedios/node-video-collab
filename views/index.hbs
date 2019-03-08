@@ -22,11 +22,10 @@
     <div class="col-md-6">
       {{#if tasks}}
         <h3>Your list of tasks</h3>
-        <ul class="list-group">
+        <ul id="tasks-list" class="list-group">
           {{#each tasks}}
-            <li class="list-group-item">
-              <a href="/task/{{this._id}}">{{this.title}}</a>
-              <span class="float-right"><i class="fa fa-angle-right"></i></span>
+            <li class="list-group-item" data-id="{{this._id}}">
+              {{this.title}} <span class="float-right"><i class="fa fa-angle-right"></i></span>
             </li>
           {{/each}}
         </ul>
@@ -36,4 +35,11 @@
       {{/if}}
     </div>
   </div>
+
+<script>
+  $('.list-group-item').click(function() {
+    window.location.href = "/task/" + $(this).data('id');
+  });
+</script>
+
 {{/if}}

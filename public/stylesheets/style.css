@@ -22,6 +22,15 @@ a {
   color: #00B7FF;
 }
 
+#tasks-list li {
+  cursor: pointer;
+}
+
+#tasks-list li.list-group-item:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
 #chatbox-listMessages {
   height: 150px;
   overflow-y: scroll;
@@ -72,6 +81,8 @@ a {
 #make-call i, #end-call i {
   font-size: 20px;
 }
+
+
 
 footer {
   margin-top: 20px;
