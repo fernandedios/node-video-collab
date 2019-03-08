@@ -7,7 +7,19 @@ var transporter = nodemailer.createTransport(config.mailer);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Node Video Collaboration' });
+  var params = { title: 'Node Video Collaboration', tasks: [] };
+
+  if (req.user) {
+    Task.find({ owner: req.user._id }, function(err, tasks) {
+      console.log(tasks);
+
+      params.tasks = tasks;
+      res.render('index', params);
+    });
+  }
+  else {
+    res.render('index', params);
+  }
 });
 
 router.get('/about', function(req, res, next) {
