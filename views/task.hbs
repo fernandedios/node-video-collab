@@ -68,12 +68,14 @@
         </div>
       </div>
       <div class="card-footer">
-        <div class="input-group">
-          <input placeholder="Enter Message" id="userMessage" type="text" class="form-control form-control-sm">
-          <div class="input-group-append">
-            <button class="btn btn-primary" onclick="sendMessage()">SEND</button>
+        <form id="send-message-form">
+          <div class="input-group">
+            <input placeholder="Enter Message" id="userMessage" type="text" class="form-control form-control-sm">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">SEND MESSAGE</button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -131,7 +133,7 @@
 
   socket.on('updateUserList', function(users) {
     console.log(users);
-    
+
     $('#users-list').html(''); // clear list
 
     users.forEach(function(user) {
@@ -148,10 +150,15 @@
   };
 
   var sendMessage = function() {
-  var userMessage = $('#userMessage').val();
-  socket.emit('chatMessage', { message: userMessage, username: username });
-    $('#userMessage').val("");
+    var userMessage = $('#userMessage').val();
+    socket.emit('chatMessage', { message: userMessage, username: username });
+      $('#userMessage').val("");
   };
+
+  $('#send-message-form').submit(function(e) {
+    e.preventDefault();
+    sendMessage();
+  });
 
   socket.on('chatMessage', function(data) {
     $('#chatbox-listMessages').append(userMessage(data.username, data.message));
