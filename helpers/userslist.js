@@ -6,15 +6,15 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var Users =
+var UsersList =
 function () {
-  function Users() {
-    _classCallCheck(this, Users);
+  function UsersList() {
+    _classCallCheck(this, UsersList);
 
     this.users = [];
   }
 
-  _createClass(Users, [{
+  _createClass(UsersList, [{
     key: "addUser",
     value: function addUser(id, name, room) {
       var user = {
@@ -58,9 +58,9 @@ function () {
     }
   }]);
 
-  return Users;
+  return UsersList;
 }();
 
 module.exports = {
-  Users: Users
+  UsersList: UsersList
 };
