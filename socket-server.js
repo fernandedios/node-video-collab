@@ -37,6 +37,8 @@ module.exports = function(server) {
 
       socket.room = data.room; // wip
       socket.join(data.room);
+
+      console.log(usersList);
     });
 
     socket.on('chatMessage', function(data) {
