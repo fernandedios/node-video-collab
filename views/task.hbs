@@ -129,6 +129,18 @@
 
   socket.emit('joinRoom', {room: roomId, username: username});
 
+  socket.on('updateUserList', function(users) {
+    console.log(users);
+    
+    $('#users-list').html(''); // clear list
+
+    users.forEach(function(user) {
+      $('#users-list').append(jQuery('<li class="list-group-item"></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
+  });
+
   var userMessage = function(name, text) {
     return ('<li class="media"><div class="media-body">'
     + '<div class="media-body" /><b>' + name + ':</b> ' + text + '</div>'

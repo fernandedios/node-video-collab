@@ -2,10 +2,10 @@
 
 var socketIO = require('socket.io');
 var ot = require('ot');
-var Users = require('./helpers/users').Users;
+var UsersList = require('./helpers/userslist').UsersList;
 
 var roomList = {};
-var users = new Users();
+var usersList = new UsersList();
 
 module.exports = function(server) {
   var str = '// Welcome \n\n' + 'function helloWorld() {\n  console.log("Hello World!"); \n} \n\nhelloWorld();';
@@ -28,17 +28,15 @@ module.exports = function(server) {
         roomList[data.room] = socketIOServer;
       }
 
-      users.removeUser(socket.id); // remove user from other active tasks
-      users.addUser(socket.id, data.username, data.room);
-      io.to(data.room).emit('updateUserList', users.getUserList(data.room));
+      usersList.removeUser(socket.id); // remove user from other active tasks
+      usersList.addUser(socket.id, data.username, data.room); // add user to task
+      io.to(data.room).emit('updateUserList', usersList.getUserList(data.room)); // emit event
 
       roomList[data.room].addClient(socket);
       roomList[data.room].setName(socket, data.username);
 
-      socket.room = data.room;
+      socket.room = data.room; // wip
       socket.join(data.room);
-
-      console.log(users);
     });
 
     socket.on('chatMessage', function(data) {
