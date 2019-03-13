@@ -26,8 +26,18 @@ a {
   color: #00B7FF;
 }
 
-#tasks-list li {
+#tasks-list li, .user-container li {
   cursor: pointer;
+}
+
+.user-container li .float-right {
+  color: #fff;
+  font-size: 20px;
+}
+
+.user-container li.list-group-item:hover {
+  background-color: #28a745;
+  color: #fff;
 }
 
 #tasks-list li.list-group-item:hover {
@@ -39,6 +49,11 @@ a {
   height: 150px;
   overflow-y: scroll;
 }
+
+.user-container {
+  margin-bottom: 15px;
+}
+
 
 #users-list {
   min-height: 100px;

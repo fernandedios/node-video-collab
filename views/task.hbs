@@ -57,7 +57,7 @@
       <div class="card-body">
         <div class="row">
         <div class="col-lg-4">
-          <div class="card">
+          <div class="card user-container">
             <div class="card-body">
               <ul id="users-list" class="list-group"></ul>
             </div>
@@ -137,7 +137,9 @@
     $('#users-list').html(''); // clear list
 
     users.forEach(function(user) {
-      $('#users-list').append(jQuery('<li class="list-group-item"></li>').text(user));
+      $('#users-list').append(jQuery('<li class="list-group-item"></li>').html(
+        user + ' <div class="float-right"><i class="fa fa-phone"></i></div>'
+      ));
     });
   });
 
