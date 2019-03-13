@@ -54,15 +54,17 @@ module.exports = function(server) {
     });
 
     socket.on('disconnect', function() {
-      var user = usersList.removeUser(socket.id);
+      if (usersList) {
+        var user = usersList.removeUser(socket.id);
 
-      if (user) {
-        socket.leave(user.room);
-        io.to(user.room).emit('updateUserList', users.getUserList(user.room));
-        io.to(user.room).emit('chatMessage', {
-          username: 'Admin',
-          message: user.name + ' has left.'
-        });
+        if (user) {
+          socket.leave(user.room);
+          io.to(user.room).emit('updateUserList', usersList.getUserList(user.room));
+          io.to(user.room).emit('chatMessage', {
+            username: 'Admin',
+            message: user.name + ' has left.'
+          });
+        }
       }
     });
   });

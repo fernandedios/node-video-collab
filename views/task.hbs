@@ -99,6 +99,9 @@
   var peerServerConf = {{{json peerServer}}};
   var baseURL = {{{json base}}};
 
+  var username;
+  var classSelf = 'text-warning';
+
   var socket = io.connect(baseURL);
   var editor = CodeMirror.fromTextArea(document.getElementById("code-screen"), {
     lineNumbers: true,
@@ -122,7 +125,7 @@
     init(obj.str, obj.revision, obj.clients, new SocketIOAdapter(socket));
   });
 
-  var username = $("#chatbox-username").val();
+  username = $("#chatbox-username").val();
   if(username === "") {
     var userId = Math.floor(Math.random() * 9999).toString();
     username = "User" + userId;
@@ -137,9 +140,17 @@
     $('#users-list').html(''); // clear list
 
     users.forEach(function(user) {
-      $('#users-list').append(jQuery('<li class="list-group-item"></li>').html(
-        user + ' <div class="float-right"><i class="fa fa-phone"></i></div>'
-      ));
+      var ownClass = (user === username) ? classSelf : '';
+      userName = (user === username) ? user + ' (you)' : user;
+
+      var item = jQuery('<li class="list-group-item ' + ownClass + '"></li>').html(
+        userName + ' <div class="float-right"><i class="fa fa-phone"></i></div>'
+      );
+      (user === username) ? $('#users-list').prepend(item) : $('#users-list').append(item);
+    });
+
+    socket.on('chatMessage', function(data) {
+      $('#chatbox-listMessages').append(userMessage(data.username, data.message));
     });
   });
 
@@ -160,8 +171,21 @@
     sendMessage();
   });
 
-  socket.on('chatMessage', function(data) {
-    $('#chatbox-listMessages').append(userMessage(data.username, data.message));
+  $('#users-list').on('click', 'li', function() {
+    // clicked on others
+    if(!$(this).hasClass(classSelf)) {
+      var callID = $(this).text() + roomId;
+      console.log('calling ' + callID);
+
+      $('#callto-id').val(callID.toString().replace(' ', '')); //remove spaces
+    }
+  });
+
+  $('#users-list').on('mouseover', 'li', function() {
+    // hovered on self
+    if($(this).hasClass(classSelf)) {
+      $(this).find('.float-right').hide();
+    }
   });
 
   // compatibility
