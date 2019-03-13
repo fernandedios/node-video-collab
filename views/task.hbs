@@ -26,7 +26,7 @@
         </div>
 
         <div id="step3" class="p-3">
-          <p>Talk to <span id="second-id">...</span></p>
+          <p>Talking to <span id="second-id">...</span></p>
           <p>
             <a href="#" class="btn btn-danger" id="end-call">
               <i class="fa fa-phone"></i>
@@ -178,6 +178,7 @@
       console.log('calling ' + callID);
 
       $('#callto-id').val(callID.toString().replace(' ', '')); //remove spaces
+      $('#make-call').trigger('click'); // initiate call
     }
   });
 
@@ -208,6 +209,10 @@
   peer.on('call', function(call) {
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function(localStream) {
+        if (window.existingCall) {
+          window.existingCall.close();
+        }
+
         $('#my-video')[0].srcObject = localStream;
         call.answer(localStream)
 
@@ -232,6 +237,7 @@
   // Click handlers setup
   $(function(){
     $('#make-call').click(function(){
+
       var call = peer.call($('#callto-id').val(), window.localStream);
 
       call.on('stream', function(remoteStream) {
@@ -256,8 +262,11 @@
       .then(function(localStream){
         $('#my-video')[0].srcObject = localStream;
         window.localStream = localStream;
-        step2();
-      })
+        $('#step2').hide();
+        $('#step3').show();
+
+        $('#second-id').text((call.peer).toString().replace('', roomId));
+      });
       .catch(function(err) {
         console.log(err);
       });
