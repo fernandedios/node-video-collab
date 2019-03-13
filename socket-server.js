@@ -35,14 +35,15 @@ module.exports = function(server) {
       roomList[data.room].addClient(socket);
       roomList[data.room].setName(socket, data.username);
 
-      socket.room = data.room; // wip
       socket.join(data.room);
-
-      console.log(usersList);
     });
 
     socket.on('chatMessage', function(data) {
-      io.to(socket.room).emit('chatMessage', data);
+      var user = usersList.getUser(socket.id);
+
+      if (user && isRealString(data.message)) {
+        io.to(user.room).emit('chatMessage', data);
+      }
     });
 
     socket.on('disconnect', function() {
@@ -50,3 +51,7 @@ module.exports = function(server) {
     });
   });
 }
+
+var isRealString = function(str) {
+  return typeof str === 'string' && str.trim().length > 0;
+};
