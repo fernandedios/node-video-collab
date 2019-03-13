@@ -209,20 +209,7 @@
   peer.on('call', function(call) {
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function(localStream) {
-        if (window.existingCall) {
-          window.existingCall.close();
-        }
-
-        $('#my-video')[0].srcObject = localStream;
-        call.answer(localStream)
-
-        call.on('stream', function(remoteStream) {
-          $('#second-video')[0].srcObject = remoteStream;
-        });
-
-        call.on('close', step2);
-        window.existingCall = call;
-        step2();
+        step3(call, true);
       })
       .catch(function(err) {
         console.log(err);
@@ -237,21 +224,15 @@
   // Click handlers setup
   $(function(){
     $('#make-call').click(function(){
-
       var call = peer.call($('#callto-id').val(), window.localStream);
-
-      call.on('stream', function(remoteStream) {
-        $('#second-video')[0].srcObject = remoteStream;
-      });
-
-      call.on('close', step2);
-      window.existingCall = call;
-      step2();
+      step3(call, false);
     });
 
     $('#end-call').click(function(){
-      window.existingCall.close();
-      step2();
+      if (window.existingCall) {
+        window.existingCall.close();
+        step2();
+      }
     });
 
     step1();
@@ -262,19 +243,40 @@
       .then(function(localStream){
         $('#my-video')[0].srcObject = localStream;
         window.localStream = localStream;
-        $('#step2').hide();
-        $('#step3').show();
 
-        $('#second-id').text((call.peer).toString().replace('', roomId));
-      });
+        step2();
+      })
       .catch(function(err) {
         console.log(err);
       });
   }
 
   function step2 () {
+    $('#my-id').text(peer.id);
     $('#step3').hide();
     $('#step2').show();
+  }
+
+  function step3(call, isReceiver) {
+    if (isReceiver) {
+      $('#my-video')[0].srcObject = localStream;
+      call.answer(localStream);
+    }
+
+    if (window.existingCall) {
+      window.existingCall.close();
+    }
+
+    call.on('stream', function(remoteStream) {
+      $('#second-video')[0].srcObject = remoteStream;
+    });
+
+    call.on('close', step2);
+    window.existingCall = call;
+
+    $('#step2').hide();
+    $('#step3').show();
+    $('#second-id').text((call.peer).toString().replace(roomId, '')); // just get userid
   }
 
 </script>
