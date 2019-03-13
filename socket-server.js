@@ -5,7 +5,7 @@ var ot = require('ot');
 var UsersList = require('./helpers/userslist').UsersList;
 
 var roomList = {};
-var usersList = new UsersList();
+var usersList;
 
 module.exports = function(server) {
   var str = '// Welcome \n\n' + 'function helloWorld() {\n  console.log("Hello World!"); \n} \n\nhelloWorld();';
@@ -14,6 +14,8 @@ module.exports = function(server) {
   io.on('connection', function(socket) {
     socket.on('joinRoom', function(data) {
       if (!roomList[data.room]) {
+        usersList = new UsersList();
+
         var socketIOServer = new ot.EditorSocketIOServer(str, [], data.room, function(socket, cb) {
           var self = this;
           Task.findByIdAndUpdate(data.room, {content: self.document}, function(err) {
@@ -28,6 +30,8 @@ module.exports = function(server) {
         roomList[data.room] = socketIOServer;
       }
 
+      socket.join(data.room);
+
       usersList.removeUser(socket.id); // remove user from other active tasks
       usersList.addUser(socket.id, data.username, data.room); // add user to task
       io.to(data.room).emit('updateUserList', usersList.getUserList(data.room)); // emit event
@@ -35,7 +39,10 @@ module.exports = function(server) {
       roomList[data.room].addClient(socket);
       roomList[data.room].setName(socket, data.username);
 
-      socket.join(data.room);
+      socket.broadcast.to(data.room).emit('chatMessage', {
+        username: 'Admin',
+        message: data.username + ' has joined'
+      });
     });
 
     socket.on('chatMessage', function(data) {
@@ -47,7 +54,16 @@ module.exports = function(server) {
     });
 
     socket.on('disconnect', function() {
-      socket.leave(socket.room);
+      var user = usersList.removeUser(socket.id);
+
+      if (user) {
+        socket.leave(user.room);
+        io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+        io.to(user.room).emit('chatMessage', {
+          username: 'Admin',
+          message: user.name + ' has left.'
+        });
+      }
     });
   });
 }
