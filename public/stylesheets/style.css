@@ -26,6 +26,16 @@ a {
   color: #00B7FF;
 }
 
+.msg-container {
+  padding-bottom: 10px;
+}
+
+.chat-notice {
+  text-align: right;
+  font-size: 10px;
+  color: #bbb;
+}
+
 .user-container {
   margin-bottom: 15px;
 }
