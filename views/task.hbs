@@ -57,13 +57,11 @@
       <div class="card-body msg-container">
         <div class="row">
           <div class="col-lg-4">
-            <div class="card user-container">
-              <div class="card-body">
-                <ul id="users-list" class="list-group"></ul>
-              </div>
+            <div class="user-container">
+              <ul id="users-list" class="list-group"></ul>
             </div>
           </div>
-          <div class="col-lg-8">
+          <div class="col-lg-8 msgs">
             <ul class="list-unstyled" id="chatbox-listMessages"></ul>
           </div>
       </div>
@@ -158,6 +156,7 @@
 
   socket.on('chatMessage', function(data) {
     $('#chatbox-listMessages').append(userMessage(data.username, data.message));
+    scrollToBottom();
   });
 
   $('#userMessage').keyup(function() {
@@ -301,5 +300,20 @@
     $('#step3').show();
     $('#second-id').text((call.peer).toString().replace(roomId, '')); // just get userid
   }
+
+  function scrollToBottom() {
+        var messages = $('#chatbox-listMessages');
+        var newMessage = messages.children('li:last-child');
+
+        var clientHeight = messages.prop('clientHeight');
+        var scrollTop = messages.prop('scrollTop');
+        var scrollHeight = messages.prop('scrollHeight');
+        var newMessageHeight = newMessage.innerHeight();
+        var lastMessageHeight = newMessage.prev().innerHeight();
+
+        if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+            messages.scrollTop(scrollHeight);
+        }
+    }
 
 </script>
