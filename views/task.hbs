@@ -177,7 +177,8 @@
   });
 
   var userMessage = function(name, text) {
-    return ('<li class="media"><div class="media-body">'
+    var txtClass = (name === 'Admin') ? 'text-admin' : '';
+    return ('<li class="media ' + txtClass + '"><div class="media-body">'
     + '<div class="media-body" /><b>' + name + ':</b> ' + text + '</div>'
     + '<hr /></div></li>');
   };
@@ -185,7 +186,7 @@
   var sendMessage = function() {
     var userMessage = $('#userMessage').val();
     socket.emit('chatMessage', { message: userMessage, username: username });
-      $('#userMessage').val("");
+    $('#userMessage').val("");
   };
 
   $('#send-message-form').submit(function(e) {

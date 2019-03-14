@@ -37,6 +37,11 @@ a {
   height: 10px;
 }
 
+.text-admin {
+  color: #6c757d!important;
+  opacity: .3;
+}
+
 .user-container {
   margin-bottom: 15px;
 }

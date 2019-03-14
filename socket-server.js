@@ -41,7 +41,7 @@ module.exports = function(server) {
 
       socket.broadcast.to(data.room).emit('chatMessage', {
         username: 'Admin',
-        message: data.username + ' has joined'
+        message: data.username + ' has joined.'
       });
     });
 
