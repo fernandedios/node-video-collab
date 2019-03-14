@@ -54,7 +54,7 @@
         </span>
       </div>
 
-      <div class="card-body">
+      <div class="card-body msg-container">
         <div class="row">
           <div class="col-lg-4">
             <div class="card user-container">
@@ -68,7 +68,7 @@
           </div>
       </div>
       <div class="row">
-        <div class="col chat-notice">Several people are typing...</div>
+        <div class="col chat-notice"></div>
       </div>
     </div>
     <div class="card-footer">
@@ -104,6 +104,9 @@
 
   var username;
   var classSelf = 'text-warning';
+
+  var typingTimeout;
+  var typing = false;
 
   var socket = io.connect(baseURL);
   var editor = CodeMirror.fromTextArea(document.getElementById("code-screen"), {
@@ -151,10 +154,27 @@
       );
       (user === username) ? $('#users-list').prepend(item) : $('#users-list').append(item);
     });
+  });
 
-    socket.on('chatMessage', function(data) {
-      $('#chatbox-listMessages').append(userMessage(data.username, data.message));
-    });
+  socket.on('chatMessage', function(data) {
+    $('#chatbox-listMessages').append(userMessage(data.username, data.message));
+  });
+
+  $('#userMessage').keyup(function() {
+      typing = true;
+
+      socket.emit('typing', 'typing...');
+      clearTimeout(typingTimeout);
+
+      typingTimeout = setTimeout(function() {
+        typing = false;
+        socket.emit('typing', false);
+      }, 1000);
+  });
+
+  socket.on('typing', function(data) {
+    var typeMsg = (data) ? (data + ' is typing...') : '';
+    $('.chat-notice').text(typeMsg);
   });
 
   var userMessage = function(name, text) {

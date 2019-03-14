@@ -53,6 +53,17 @@ module.exports = function(server) {
       }
     });
 
+    socket.on('typing', function(data) {
+        var user = usersList.getUser(socket.id);
+        var response = data;
+
+        if (data) {
+            response = user.name;
+        }
+
+        socket.broadcast.to(user.room).emit('typing', response);
+    });
+
     socket.on('disconnect', function() {
       if (usersList) {
         var user = usersList.removeUser(socket.id);
