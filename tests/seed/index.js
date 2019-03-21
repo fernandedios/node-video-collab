@@ -1,12 +1,11 @@
-var ObjectID = require('mongodb').ObjectID;
+const { ObjectID } = require('mongodb');
+const User = require('../../models/user');
+const Task = require('../../models/task');
 
-var User = require('../../models/user');
-var Task = require('../../models/task');
+const userOneId = new ObjectID();
+const userTwoId = new ObjectID();
 
-var userOneId = new ObjectID();
-var userTwoId = new ObjectID();
-
-var users  = [
+const users  = [
   {
     _id: userOneId,
     email: 'userOne@test.com',
@@ -19,7 +18,7 @@ var users  = [
   }
 ];
 
-var tasks = [
+const tasks = [
   {
     _id: new ObjectID,
     title: 'Task One',
@@ -32,34 +31,30 @@ var tasks = [
   }
 ];
 
-var populateTasks = function(done) {
-  Task.remove({});
-    .then(function() {
+const populateTasks = (done) => {
+  Task.remove({})
+    .then(() => {
       return Task.insertMany(tasks);
     })
-    .then(function() {
-      done();
-    });
+    .then(() => done());
 };
 
-var populateUsers = function(done) {
-  User.remove({});
-    .then(function() {
-      var userOne = new User(users[0]).setPassword(users[0].password);
-      var userTwo = new User(users[1]).setPassword(users[1].password);
+const populateUsers = (done) => {
+  User.remove({})
+    .then(async () => {
+      var userOne = new User(users[0]);
+      var userTwo = new User(users[1]);
+      userOne.setPassword(users[0].password);
+      userTwo.setPassword(users[1].password);
       userOne.save();
       userTwo.save();
 
       return Promise.all([userOne, userTwo]);
     })
-    .then(function() {
+    .then(() => {
       done();
-    });
+    })
+    .catch(err => console.log(err));
 };
 
-module.exports = {
-  users: users,
-  tasks: tasks,
-  populateUsers: populateUsers,
-  populateTasks: populateTasks
-};
+module.exports = { users, tasks, populateUsers, populateTasks };

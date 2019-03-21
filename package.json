@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "concurrently \"nodemon ./bin/www\" \"npx peerjs --port 9001\""
+    "dev": "concurrently \"nodemon ./bin/www\" \"npx peerjs --port 9001\"",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha tests/**/*.test.js --timeout 10000",
+    "test-watch": "nodemon --exec 'npm test'"
   },
   "dependencies": {
     "concurrently": "^4.1.0",
@@ -27,8 +29,9 @@
     "socket.io": "^1.7.3"
   },
   "devDependencies": {
-    "jest": "^24.1.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.0.2",
     "nodemon": "^1.18.9",
-    "supertest": "^4.0.2"
+    "supertest": "^2.0.0"
   }
 }
