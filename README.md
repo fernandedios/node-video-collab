@@ -80,6 +80,11 @@ You will need to setup a separate peerJS server for production use.
 You can use the companion peerJS server setup [here](https://github.com/fernandedios/node-video-collab-peer)
 
 
+Preview
+---------
+Access the [application preview](https://node-video-collab.herokuapp.com).
+
+
 Thanks
 ------
 
