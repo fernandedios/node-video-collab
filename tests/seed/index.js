@@ -49,7 +49,9 @@ const populateUsers = (done) => {
       userOne.save();
       userTwo.save();
 
-      return Promise.all([userOne, userTwo]);
+      //return Promise.all([userOne, userTwo]);
+      Promise.all([userOne, userTwo]).catch(err => console.log(err));
+
     })
     .then(() => {
       done();
