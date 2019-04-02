@@ -93,3 +93,6 @@ Thanks
 > [fernandedios.com](http://fernandedios.com) &nbsp;&middot;&nbsp;
 > GitHub [@fernandedios](https://github.com/fernandedios) &nbsp;&middot;&nbsp;
 > Twitter [@fernan_de_dios](https://twitter.com/fernan_de_dios)
+
+[Facebook Application]: http://developers.facebook.com/
+[Gmail Account]: https://www.gmail.com
